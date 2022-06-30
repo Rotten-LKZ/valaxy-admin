@@ -17,8 +17,8 @@ export const useUserStore = defineStore('user', () => {
       info.value = resp
   }
 
-  async function login(username: string, password: string) {
-    const resp = sendRequest(await window.API.user.login(username, password))
+  async function login(baseUrl: string, username: string, password: string) {
+    const resp = sendRequest(await window.API.user.login(baseUrl, username, password))
     if (resp.status)
       info.value = { username, token: resp.token }
     else

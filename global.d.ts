@@ -35,10 +35,11 @@ declare interface UserApi {
   state: () => Promise<ApiReturn<UserInfo>>
   /**
    * 登录
+   * @params baseUrl 请求公共 url，最后不需要 "/"
    * @params username 用户名
    * @params password 密码 或 Token
    */
-  login: (username: string, password: string) => Promise<ApiReturn<LoginApi>>
+  login: (baseUrl: string, username: string, password: string) => Promise<ApiReturn<LoginApi>>
 }
 
 declare interface AddArticleApi {

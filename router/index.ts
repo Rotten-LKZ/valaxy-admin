@@ -46,8 +46,9 @@ const router = createRouter({
   ],
 })
 
-router.beforeEach((to) => {
+router.beforeEach(async (to) => {
   const user = useUserStore()
+  await user.init()
 
   if (user.info.token === '' && to.name !== 'login')
     return { name: 'login' }

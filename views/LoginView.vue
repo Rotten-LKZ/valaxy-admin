@@ -5,12 +5,13 @@ import { useUserStore } from '@/stores/user'
 
 const router = useRouter()
 const loginForm = reactive({
+  baseUrl: '',
   username: '',
   password: '',
 })
 
 async function submitLoginForm() {
-  if (await useUserStore().login(loginForm.username, loginForm.password))
+  if (await useUserStore().login(loginForm.baseUrl, loginForm.username, loginForm.password))
     router.push({ name: 'home' })
 }
 </script>
@@ -26,6 +27,9 @@ async function submitLoginForm() {
       <el-form-item>
         <h1>Valaxy Admin 登录</h1>
       </el-form-item>
+      <el-form-item label="公共链接">
+        <el-input v-model="loginForm.baseUrl" />
+      </el-form-item>
       <el-form-item label="用户名">
         <el-input v-model="loginForm.username" />
       </el-form-item>
@@ -33,7 +37,7 @@ async function submitLoginForm() {
         <el-input v-model="loginForm.password" type="password" />
       </el-form-item>
       <el-form-item>
-        <el-button type="default" class="login-form-submit-btn" @click="submitLoginForm">
+        <el-button type="primary" class="login-form-submit-btn" @click="submitLoginForm">
           登录
         </el-button>
       </el-form-item>
@@ -63,7 +67,6 @@ async function submitLoginForm() {
   // 提交按钮
   .login-form-submit-btn {
     width: 100%;
-    font-size: 1.5rem;
   }
 
   h1 {
