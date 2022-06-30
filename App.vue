@@ -28,7 +28,7 @@ watch(() => route.path, () => {
     <el-aside :class="`container-aside ${collapse ? 'container-aside-collapse' : ''}`">
       <el-scrollbar>
         <el-header class="container-aside-header">
-          Rot Admin
+          Valaxy Admin
           <el-icon v-if="isSmallSize" class="cur-pointer" @click="collapse = !collapse">
             <Expand v-if="collapse" />
             <Fold v-else />
@@ -53,7 +53,7 @@ watch(() => route.path, () => {
               添加博文
             </el-menu-item>
             <el-menu-item index="/article/edit">
-              <el-icon><DocumentRemove /></el-icon>
+              <el-icon><EditPen /></el-icon>
               修改博文
             </el-menu-item>
           </el-sub-menu>

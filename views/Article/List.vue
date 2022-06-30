@@ -1,12 +1,27 @@
 <script setup lang="ts">
+import { ElMessage } from 'element-plus'
 import { useArticleStore } from '@/stores/article'
 
 const article = useArticleStore()
 
 article.init()
 
-function deleteArticle(filename: string) {
-  // article.deleteArticle(filename)
+async function deleteArticle(filename: string) {
+  const result = await article.delArticle(filename)
+  if (result) {
+    ElMessage({
+      showClose: true,
+      message: '文章删除成功',
+      type: 'success',
+    })
+  }
+  else {
+    ElMessage({
+      showClose: true,
+      message: '文章删除失败',
+      type: 'error',
+    })
+  }
 }
 </script>
 

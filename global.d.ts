@@ -54,7 +54,12 @@ declare interface GetArticleApi {
   articles: Article[]
 }
 
-declare interface updateArticleApi {
+declare interface UpdateArticleApi {
+  // 是否成功
+  status: boolean
+}
+
+declare interface DeleteArticleApi {
   // 是否成功
   status: boolean
 }
@@ -76,7 +81,12 @@ declare interface ArticleApi {
    * @params filename 文章文件名（带 .md）
    * @params content 文章新内容
    */
-  update: (filename: string, content: string) => Promise<ApiReturn<updateArticleApi>>
+  update: (title: string, filename: string, content: string) => Promise<ApiReturn<UpdateArticleApi>>
+  /**
+   * 删除文章
+   * @params filename 文章文件名（带 .md）
+   */
+  del: (filename: string) => Promise<ApiReturn<DeleteArticleApi>>
 }
 
 declare interface API {

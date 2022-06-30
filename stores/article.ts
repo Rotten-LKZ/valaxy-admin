@@ -25,6 +25,7 @@ export const useArticleStore = defineStore('article', () => {
   }
 
   async function addArticle(title: string, filename: string, content: string): Promise<boolean> {
+    filename = `${filename}.md`
     await init()
     const resp = sendRequest(await window.API.article.add(title, filename, content))
     if (resp.status)
@@ -32,5 +33,22 @@ export const useArticleStore = defineStore('article', () => {
     return resp.status
   }
 
-  return { isInit, articles, init, getArticle, addArticle }
+  async function delArticle(filename: string): Promise<boolean> {
+    await init()
+    const resp = sendRequest(await window.API.article.del(filename))
+    if (resp.status)
+      articles.value = articles.value.filter(article => article.filename !== filename)
+    return resp.status
+  }
+
+  async function updateArticle(title: string, filename: string, content: string): Promise<boolean> {
+    filename = `${filename}.md`
+    await init()
+    const resp = sendRequest(await window.API.article.update(title, filename, content))
+    if (resp.status)
+      articles.value = articles.value.map(article => article.filename === filename ? { title, filename, content } : article)
+    return resp.status
+  }
+
+  return { isInit, articles, init, getArticle, addArticle, delArticle, updateArticle }
 })
