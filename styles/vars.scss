@@ -1,0 +1,6 @@
+@use 'sass:map';
+
+$light: () !default;
+$light: map.merge((
+  'bg-d': 'asdf'
+), $light);
