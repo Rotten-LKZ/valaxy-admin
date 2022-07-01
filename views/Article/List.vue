@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ElMessage } from 'element-plus'
+import { useRouter } from 'vue-router'
 import { useArticleStore } from '@/stores/article'
 
+const router = useRouter()
 const article = useArticleStore()
-
-article.init()
 
 async function deleteArticle(filename: string) {
   const result = await article.delArticle(filename)
@@ -23,6 +23,10 @@ async function deleteArticle(filename: string) {
     })
   }
 }
+
+function editArticle(filename: string) {
+  router.push({ name: 'article-edit', query: { filename } })
+}
 </script>
 
 <template>
@@ -31,7 +35,7 @@ async function deleteArticle(filename: string) {
     <el-table-column prop="filename" label="文件名" />
     <el-table-column fixed="right" label="操作" width="100">
       <template #default="scope">
-        <el-button link type="primary" size="small">
+        <el-button link type="primary" size="small" @click="editArticle(scope.row.filename)">
           修改
         </el-button>
         <el-popconfirm title="确认删除？" @confirm="deleteArticle(scope.row.filename)">

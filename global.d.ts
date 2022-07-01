@@ -64,6 +64,11 @@ declare interface DeleteArticleApi {
   status: boolean
 }
 
+declare interface PushArticleApi {
+  // 是否成功
+  status: boolean
+}
+
 declare interface ArticleApi {
   /**
    * 获取文章列表
@@ -87,11 +92,27 @@ declare interface ArticleApi {
    * @params filename 文章文件名（带 .md）
    */
   del: (filename: string) => Promise<ApiReturn<DeleteArticleApi>>
+  /**
+   * 更新文章
+   */
+  push: () => Promise<ApiReturn<PushArticleApi>>
+}
+
+declare interface UploadImageApi {
+  // 是否成功
+  status: boolean
+  // 路径
+  urls: string[]
+}
+
+declare interface ImageApi {
+  upload: (file: File[]) => Promise<ApiReturn<UploadImageApi>>
 }
 
 declare interface API {
   user: UserApi
   article: ArticleApi
+  image: ImageApi
 }
 
 declare interface Window {

@@ -7,6 +7,7 @@ import ArticleAdd from '../views/Article/Add.vue'
 import ArticleEdit from '../views/Article/Edit.vue'
 import ArticleList from '../views/Article/List.vue'
 import { useUserStore } from '@/stores/user'
+import { useArticleStore } from '@/stores/article'
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
@@ -49,6 +50,9 @@ const router = createRouter({
 router.beforeEach(async (to) => {
   const user = useUserStore()
   await user.init()
+
+  if (to.name?.toString().startsWith('article'))
+    await useArticleStore().init()
 
   if (user.info.token === '' && to.name !== 'login')
     return { name: 'login' }

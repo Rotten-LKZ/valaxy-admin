@@ -5,7 +5,7 @@ import { useUserStore } from '@/stores/user'
 
 const router = useRouter()
 const loginForm = reactive({
-  baseUrl: '',
+  baseUrl: localStorage.getItem('base_url') || '',
   username: '',
   password: '',
 })

@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { ElMessage } from 'element-plus'
-import { defineProps, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 import { useClipboard, usePermission } from '@vueuse/core'
+import MdEditor from 'md-editor-v3'
 import { useArticleStore } from '@/stores/article'
+import { getNow } from '@/utils/time'
 
 const props = defineProps<{
   modelValue: Article
@@ -27,11 +29,10 @@ async function updateNewArticle() {
 }
 
 function copyTime() {
-  nowTime.value = new Date().toLocaleString().replace(/\//g, '-')
+  nowTime.value = getNow()
 }
 
 async function isFilenameRepeat() {
-  await article.init()
   if (props.type === 'add') {
     if (isFilenameExist()) {
       ElMessage({
@@ -76,7 +77,7 @@ watch(nowTime, () => {
       </div>
     </el-form-item>
     <el-form-item label="内容">
-      <el-input v-model="$props.modelValue.content" type="textarea" />
+      <md-editor v-model="$props.modelValue.content" />
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="updateNewArticle">

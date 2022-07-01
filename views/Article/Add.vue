@@ -1,19 +1,20 @@
 <script setup lang="ts">
 import { ElMessage } from 'element-plus'
 import { reactive } from 'vue'
-import VEditor from '../../components/VEditor.vue'
+import VEditor from '@/components/VEditor.vue'
+import { getNow } from '@/utils/time'
 
 const newArticle = reactive({
   title: '',
   filename: '',
-  content: '',
+  content: initArticleContent(),
 })
 
 function added(status: boolean) {
   if (status) {
     newArticle.title = ''
     newArticle.filename = ''
-    newArticle.content = ''
+    newArticle.content = initArticleContent()
 
     ElMessage({
       showClose: true,
@@ -28,6 +29,16 @@ function added(status: boolean) {
       type: 'error',
     })
   }
+}
+
+function initArticleContent() {
+  return `---
+title: 
+date: ${getNow()}
+categories: 
+tags:
+  - 
+---`
 }
 </script>
 
