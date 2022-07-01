@@ -82,9 +82,11 @@ watch(() => route.path, () => {
         </el-icon>
         <p class="container-content-header-route" v-text="nowPage" />
       </el-header>
-      <el-main class="container-content-main">
-        <RouterView />
-      </el-main>
+      <el-scrollbar>
+        <el-main class="container-content-main">
+          <RouterView />
+        </el-main>
+      </el-scrollbar>
     </el-container>
   </el-container>
 </template>
@@ -162,7 +164,13 @@ watch(() => route.path, () => {
 
     // 内容部分主体
     .container-content-main {
+      // padding: 20px;
       background-color: #fff;
+
+      // .container-content-main-scrollbar {
+      //   box-sizing: border-box;
+      //   padding: 20px;
+      // }
     }
   }
 
