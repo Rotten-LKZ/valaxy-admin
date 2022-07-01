@@ -57,11 +57,17 @@ watch(() => route.path, () => {
               修改博文
             </el-menu-item>
           </el-sub-menu>
-          <!-- <el-menu-item index="picture">
-            <el-icon><Picture /></el-icon>
-            图片
-          </el-menu-item>
-          <el-menu-item index="bill">
+          <el-sub-menu index="/image">
+            <template #title>
+              <el-icon><Picture /></el-icon>
+              图片
+            </template>
+            <el-menu-item index="/image/list">
+              <el-icon><Tickets /></el-icon>
+              图片列表
+            </el-menu-item>
+          </el-sub-menu>
+          <!-- <el-menu-item index="bill">
             <el-icon><Notebook /></el-icon>
             账簿
           </el-menu-item> -->

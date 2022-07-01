@@ -98,6 +98,12 @@ declare interface ArticleApi {
   push: () => Promise<ApiReturn<PushArticleApi>>
 }
 
+declare interface Image {
+  id: string
+  filename: string
+  url: string
+}
+
 declare interface UploadImageApi {
   // 是否成功
   status: boolean
@@ -105,8 +111,23 @@ declare interface UploadImageApi {
   urls: string[]
 }
 
+declare interface DeleteImageApi {
+  // 是否成功
+  status: boolean
+}
+
+declare interface GetImageApi {
+  // 是否成功
+  status: boolean
+  // 路径
+  images: Image[]
+}
+
+
 declare interface ImageApi {
   upload: (file: File[]) => Promise<ApiReturn<UploadImageApi>>
+  del: (id: string) => Promise<ApiReturn<DeleteImageApi>>
+  get: () => Promise<ApiReturn<GetImageApi>>
 }
 
 declare interface API {
