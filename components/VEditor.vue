@@ -5,6 +5,7 @@ import { useClipboard, usePermission } from '@vueuse/core'
 import MdEditor from 'md-editor-v3'
 import { useArticleStore } from '@/stores/article'
 import { getNow } from '@/utils/time'
+import sendRequest from '@/utils/request'
 
 const props = defineProps<{
   modelValue: Article
@@ -60,6 +61,15 @@ function isFilenameExist() {
   return article.articles.some(item => item.filename === `${props.modelValue.filename}.md`)
 }
 
+async function uploadImages(files: File[], callback: (urls: string[]) => void) {
+  const resp = sendRequest(await window.API.image.upload(files))
+  if (resp.status) { callback(resp.urls) }
+  else {
+    ElMessage({ showClose: true, message: '上传失败', type: 'error' })
+    callback([])
+  }
+}
+
 watch(nowTime, () => {
   copy(nowTime.value)
 })
@@ -77,7 +87,7 @@ watch(nowTime, () => {
       </div>
     </el-form-item>
     <el-form-item label="内容">
-      <md-editor v-model="$props.modelValue.content" />
+      <md-editor v-model="$props.modelValue.content" @upload-img="uploadImages" />
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="updateNewArticle">
