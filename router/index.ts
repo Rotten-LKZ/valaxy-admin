@@ -1,6 +1,12 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 
+import LoginView from '../views/LoginView.vue'
+import HomeView from '../views/HomeView.vue'
 import PublicLayout from '../views/Layout.vue'
+import ArticleAdd from '../views/Article/Add.vue'
+import ArticleEdit from '../views/Article/Edit.vue'
+import ArticleList from '../views/Article/List.vue'
+import ImageList from '../views/Image/List.vue'
 import { useUserStore } from '@/stores/user'
 import { useArticleStore } from '@/stores/article'
 
@@ -10,32 +16,32 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('@/views/HomeView.vue'),
+      component: HomeView,
     },
     {
       path: '/login',
       name: 'login',
-      component: () => import('@/views/LoginView.vue'),
+      component: LoginView,
     },
     {
       path: '/article',
       name: 'article',
-      component: () => PublicLayout,
+      component: PublicLayout,
       children: [
         {
           path: '/article/add',
           name: 'article-add',
-          component: () => import('@/views/Article/Add.vue'),
+          component: ArticleAdd,
         },
         {
           path: '/article/edit',
           name: 'article-edit',
-          component: () => import('@/views/Article/Edit.vue'),
+          component: ArticleEdit,
         },
         {
           path: '/article/list',
           name: 'article-list',
-          component: () => import('@/views/Article/List.vue'),
+          component: ArticleList,
         },
       ],
     },
@@ -47,7 +53,7 @@ const router = createRouter({
         {
           path: '/image/list',
           name: 'image-list',
-          component: () => import('@/views/Image/List.vue'),
+          component: ImageList,
         },
       ],
     },
