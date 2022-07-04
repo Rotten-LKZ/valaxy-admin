@@ -11,10 +11,15 @@ const baseUrlText = computed(() => {
   }[window.API.config.apiEnv]
 })
 const loginForm = reactive({
-  baseUrl: localStorage.getItem('base_url') || '',
+  baseUrl: '',
   username: '',
   password: '',
 })
+
+init()
+async function init() {
+  loginForm.baseUrl = await window.API.config.get('base_url') || ''
+}
 
 async function submitLoginForm() {
   if (await useUserStore().login(loginForm.baseUrl, loginForm.username, loginForm.password))

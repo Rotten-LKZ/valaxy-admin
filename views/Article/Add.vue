@@ -43,8 +43,8 @@ tags:
 ---`
 }
 
-function updateFrontmatterTitle() {
-  const needAutoUpdateTitle = localStorage.getItem('autoUpdateTitle') || 'false'
+async function updateFrontmatterTitle() {
+  const needAutoUpdateTitle = await getAutoUpdateTitleConfig()
   if (needAutoUpdateTitle === 'false')
     return
   const data = parseFrontmatter(newArticle.content)
@@ -52,12 +52,16 @@ function updateFrontmatterTitle() {
   newArticle.content = frontmatterToContnet(newArticle.content, data)
 }
 
-function updateTitle() {
-  const needAutoUpdateTitle = localStorage.getItem('autoUpdateTitle') || 'false'
+async function updateTitle() {
+  const needAutoUpdateTitle = await getAutoUpdateTitleConfig()
   if (needAutoUpdateTitle === 'false')
     return
   const data = parseFrontmatter(newArticle.content)
   newArticle.title = data.title
+}
+
+async function getAutoUpdateTitleConfig() {
+  return await window.API.config.get('autoUpdateTitle') || 'false'
 }
 </script>
 

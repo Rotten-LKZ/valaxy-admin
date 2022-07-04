@@ -3,7 +3,12 @@ import { ref, watch } from 'vue'
 import { ElMessage } from 'element-plus'
 import { useArticleStore } from '@/stores/article'
 
-const autoUpdateTitle = ref(localStorage.getItem('autoUpdateTitle') || 'false')
+const autoUpdateTitle = ref('false')
+
+init()
+async function init() {
+  autoUpdateTitle.value = await window.API.config.get('autoUpdateTitle') || 'false'
+}
 
 async function pushArticle() {
   if (await useArticleStore().pushArticle()) {
@@ -23,7 +28,7 @@ async function pushArticle() {
 }
 
 watch(autoUpdateTitle, () => {
-  localStorage.setItem('autoUpdateTitle', autoUpdateTitle.value)
+  window.API.config.set('autoUpdateTitle', autoUpdateTitle.value)
 })
 </script>
 

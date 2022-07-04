@@ -134,6 +134,8 @@ declare interface ImageApi {
 
 declare interface ApiConfig {
   apiEnv: 'SERVER' | 'GITHUB'
+  set: (key: string, value: string) => void
+  get: (key: string) => Promise<string | undefined>
 }
 
 declare interface API {
