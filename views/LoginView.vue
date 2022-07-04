@@ -1,9 +1,15 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { computed, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user'
 
 const router = useRouter()
+const baseUrlText = computed(() => {
+  return {
+    SERVER: '公共链接',
+    GITHUB: 'APIKEY',
+  }[window.API.config.apiEnv]
+})
 const loginForm = reactive({
   baseUrl: localStorage.getItem('base_url') || '',
   username: '',
@@ -27,7 +33,7 @@ async function submitLoginForm() {
       <el-form-item>
         <h1>Valaxy Admin 登录</h1>
       </el-form-item>
-      <el-form-item label="公共链接">
+      <el-form-item :label="baseUrlText">
         <el-input v-model="loginForm.baseUrl" />
       </el-form-item>
       <el-form-item label="用户名">

@@ -131,7 +131,13 @@ declare interface ImageApi {
   get: () => Promise<ApiReturn<GetImageApi>>
 }
 
+
+declare interface ApiConfig {
+  apiEnv: 'SERVER' | 'GITHUB'
+}
+
 declare interface API {
+  config: ApiConfig
   user: UserApi
   article: ArticleApi
   image: ImageApi
