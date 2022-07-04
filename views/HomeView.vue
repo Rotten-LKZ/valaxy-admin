@@ -13,6 +13,10 @@ async function init() {
   githubConfig.value = await window.API.config.get('github_config') || '{"articlesApi":"","imgStore":"GITHUB","githubImg":{"imgApi":""}}'
 }
 
+function updateGithubConfig() {
+  window.API.config.set('github_config', githubConfig.value)
+}
+
 async function pushArticle() {
   if (await useArticleStore().pushArticle()) {
     ElMessage({
@@ -55,7 +59,7 @@ watch(autoUpdateTitle, () => {
 
     <p>GitHub 配置</p>
     <el-input v-model="githubConfig" type="textarea" />
-    <el-button type="primary" style="margin-top: 6px;">
+    <el-button type="primary" style="margin-top: 6px;" @click="updateGithubConfig">
       提交
     </el-button>
   </div>
