@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { ElMessage } from 'element-plus'
 import { useArticleStore } from '@/stores/article'
 
 const autoUpdateTitle = ref('false')
 const githubConfig = ref('')
 const isGithub = window.API.config.apiEnv === 'GITHUB'
+const showGithubConfig = ref(false)
 
 init()
 async function init() {
@@ -58,9 +59,14 @@ watch(autoUpdateTitle, () => {
     <el-divider />
 
     <p>GitHub 配置</p>
-    <el-input v-model="githubConfig" type="textarea" />
-    <el-button type="primary" style="margin-top: 6px;" @click="updateGithubConfig">
-      提交
-    </el-button>
+    <el-input v-if="showGithubConfig" v-model="githubConfig" type="textarea" />
+    <div style="margin-top: 6px;">
+      <el-button type="primary" @click="updateGithubConfig">
+        提交
+      </el-button>
+      <el-button style="margin-left: 10px;" @click="showGithubConfig = !showGithubConfig">
+        显示 / 隐藏配置
+      </el-button>
+    </div>
   </div>
 </template>
