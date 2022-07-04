@@ -67,10 +67,10 @@ router.beforeEach(async (to) => {
   if (to.name?.toString().startsWith('article'))
     await useArticleStore().init()
 
-  if (user.info.token === '' && to.name !== 'login')
+  if (user.info.username === '' && to.name !== 'login')
     return { name: 'login' }
 
-  if (user.info.token !== '' && to.name === 'login')
+  if (user.info.username !== '' && to.name === 'login')
     return { name: 'home' }
 })
 
