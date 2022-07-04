@@ -7,7 +7,6 @@ export const useUserStore = defineStore('user', () => {
   const isInit = ref(false)
   const info = ref({
     username: '',
-    token: '',
   } as UserInfo)
 
   async function init() {
@@ -20,7 +19,7 @@ export const useUserStore = defineStore('user', () => {
   async function login(baseUrl: string, username: string, password: string) {
     const resp = sendRequest(await window.API.user.login(baseUrl, username, password))
     if (resp.status)
-      info.value = { username, token: resp.token }
+      info.value = { username }
     else
       ElMessage({ showClose: true, message: '登录失败，用户名或密码错误', type: 'error' })
     return resp.status

@@ -4,10 +4,13 @@ import { ElMessage } from 'element-plus'
 import { useArticleStore } from '@/stores/article'
 
 const autoUpdateTitle = ref('false')
+const githubConfig = ref('')
+const isGithub = window.API.config.apiEnv === 'GITHUB'
 
 init()
 async function init() {
   autoUpdateTitle.value = await window.API.config.get('autoUpdateTitle') || 'false'
+  githubConfig.value = await window.API.config.get('github_config') || '{"baseUrl":"","pathToArticles":"","imgStore":"GITHUB","githubImg":{"baseUrl":"","pathToImg":""}}'
 }
 
 async function pushArticle() {
@@ -46,4 +49,14 @@ watch(autoUpdateTitle, () => {
       关闭
     </el-radio>
   </el-radio-group>
+
+  <div v-if="isGithub">
+    <el-divider />
+
+    <p>GitHub 配置</p>
+    <el-input v-model="githubConfig" type="textarea" />
+    <el-button type="primary" style="margin-top: 6px;">
+      提交
+    </el-button>
+  </div>
 </template>

@@ -8,8 +8,6 @@ declare interface ApiReturn<T extends object> {
 declare interface UserInfo {
   // 用户名
   username: string
-  // Token
-  token: string
 }
 
 declare interface Article {
@@ -143,6 +141,19 @@ declare interface API {
   user: UserApi
   article: ArticleApi
   image: ImageApi
+}
+
+declare interface GithubImg {
+  baseUrl: string
+  pathToImg: string
+}
+
+declare interface GithubApi {
+  apiKey: string
+  baseUrl: string
+  pathToArticles: string
+  imgStorage: 'GITHUB'
+  githubImg: GithubImg
 }
 
 declare interface Window {
