@@ -15,9 +15,11 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: 'updated', status: boolean): void
   (e: 'focusoutFilename', foundArticle: Article): void
+  (e: 'focusoutTitle'): void
+  (e: 'focusoutContent'): void
 }>()
 
-const nowTime = ref(new Date().toLocaleString().replace(/\//g, '-'))
+const nowTime = ref(getNow())
 const { copy } = useClipboard()
 const permissionWrite = usePermission('clipboard-write')
 const article = useArticleStore()
@@ -77,17 +79,20 @@ watch(nowTime, () => {
 
 <template>
   <el-form :model="$props.modelValue" label-position="top">
-    <el-form-item label="标题">
-      <el-input v-model="$props.modelValue.title" />
-    </el-form-item>
-    <el-form-item label="文件名">
-      <div class="component-veditor-form-filename">
-        <el-input v-model="$props.modelValue.filename" @focusout="isFilenameRepeat" />
-        <span>.md</span>
-      </div>
-    </el-form-item>
+    <div class="component-veditor-form-basic">
+      <el-form-item label="标题" class="component-veditor-form-basic-item">
+        <el-input v-model="$props.modelValue.title" @focusout="emit('focusoutTitle')" />
+      </el-form-item>
+      <el-form-item label="文件名" class="component-veditor-form-basic-item">
+        <div class="component-veditor-form-basic-item-filename">
+          <el-input v-model="$props.modelValue.filename" @focusout="isFilenameRepeat" />
+          <span>.md</span>
+        </div>
+      </el-form-item>
+    </div>
+
     <el-form-item label="内容">
-      <md-editor v-model="$props.modelValue.content" @upload-img="uploadImages" />
+      <md-editor v-model="$props.modelValue.content" @upload-img="uploadImages" @focusout="emit('focusoutContent')" />
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="updateNewArticle">
@@ -103,24 +108,39 @@ watch(nowTime, () => {
 </template>
 
 <style lang="scss">
-.component-veditor-form-filename {
-  display: flex;
-  width: 100%;
-
-  // 标题 input 框
-  .el-input__wrapper {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+@media screen and (max-width: 768px) {
+  .component-veditor-form-basic {
+    flex-direction: column;
   }
+}
 
-  // .md 后缀
-  span {
-    user-select: none;
-    background-color: dimgray;
-    color: white;
-    padding: 0 6px;
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
+.component-veditor-form-basic {
+  display: flex;
+  gap: 40px;
+
+  .component-veditor-form-basic-item {
+    flex: 1;
+
+    .component-veditor-form-basic-item-filename {
+      display: flex;
+      width: 100%;
+
+      // 标题 input 框
+      .el-input__wrapper {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+
+      // .md 后缀
+      span {
+        user-select: none;
+        background-color: dimgray;
+        color: white;
+        padding: 0 6px;
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+      }
+    }
   }
 }
 </style>

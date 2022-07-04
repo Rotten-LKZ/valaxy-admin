@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { useUrlSearchParams } from '@vueuse/core'
 import { ElMessage } from 'element-plus'
-import { reactive } from 'vue'
+import { reactive, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import VEditor from '../../components/VEditor.vue'
 import { useArticleStore } from '@/stores/article'
+import { getNow } from '@/utils/time'
+import { frontmatterToContnet, parseFrontmatter } from '@/utils/article'
 
 const router = useRouter()
 const article = useArticleStore()
@@ -31,7 +33,7 @@ function edited(status: boolean) {
 
 function updateArticleInfo(foundArticle: Article) {
   articleInfo.title = foundArticle.title
-  articleInfo.content = foundArticle.content
+  articleInfo.content = addUpdateTime(foundArticle.content)
 }
 
 function getArticleInfo(): Article {
@@ -41,12 +43,18 @@ function getArticleInfo(): Article {
     return {
       title: foundArticle.title,
       filename: foundArticle.filename.substring(0, foundArticle.filename.length - 3),
-      content: foundArticle.content,
+      content: addUpdateTime(foundArticle.content),
     }
   }
   else {
     return { title: '', filename: '', content: '' }
   }
+}
+
+function addUpdateTime(content: string) {
+  const data = parseFrontmatter(content)
+  data.updated = getNow()
+  return frontmatterToContnet(content, data)
 }
 </script>
 

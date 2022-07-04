@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { ElMessage } from 'element-plus'
-import { reactive } from 'vue'
+import { reactive, watch } from 'vue'
 import VEditor from '@/components/VEditor.vue'
 import { getNow } from '@/utils/time'
+import { frontmatterToContnet, parseFrontmatter } from '@/utils/article'
 
 const newArticle = reactive({
   title: '',
@@ -34,14 +35,32 @@ function added(status: boolean) {
 function initArticleContent() {
   return `---
 title: 
-date: ${getNow()}
-categories: 
+date: '${getNow()}'
+updated: '${getNow()}'
+categories: Category
 tags:
-  - 
+  - Tag
 ---`
+}
+
+function updateFrontmatterTitle() {
+  const needAutoUpdateTitle = localStorage.getItem('autoUpdateTitle') || 'false'
+  if (needAutoUpdateTitle === 'false')
+    return
+  const data = parseFrontmatter(newArticle.content)
+  data.title = newArticle.title
+  newArticle.content = frontmatterToContnet(newArticle.content, data)
+}
+
+function updateTitle() {
+  const needAutoUpdateTitle = localStorage.getItem('autoUpdateTitle') || 'false'
+  if (needAutoUpdateTitle === 'false')
+    return
+  const data = parseFrontmatter(newArticle.content)
+  newArticle.title = data.title
 }
 </script>
 
 <template>
-  <VEditor v-model="newArticle" type="add" @updated="added" />
+  <VEditor v-model="newArticle" type="add" @updated="added" @focusout-title="updateFrontmatterTitle" @focusout-content="updateTitle" />
 </template>
