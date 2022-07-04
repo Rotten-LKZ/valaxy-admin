@@ -144,14 +144,12 @@ declare interface API {
 }
 
 declare interface GithubImg {
-  baseUrl: string
-  pathToImg: string
+  imgApi: string
 }
 
 declare interface GithubApi {
   apiKey: string
-  baseUrl: string
-  pathToArticles: string
+  articlesApi: string
   imgStorage: 'GITHUB'
   githubImg: GithubImg
 }

@@ -10,7 +10,7 @@ const isGithub = window.API.config.apiEnv === 'GITHUB'
 init()
 async function init() {
   autoUpdateTitle.value = await window.API.config.get('autoUpdateTitle') || 'false'
-  githubConfig.value = await window.API.config.get('github_config') || '{"baseUrl":"","pathToArticles":"","imgStore":"GITHUB","githubImg":{"baseUrl":"","pathToImg":""}}'
+  githubConfig.value = await window.API.config.get('github_config') || '{"articlesApi":"","imgStore":"GITHUB","githubImg":{"imgApi":""}}'
 }
 
 async function pushArticle() {
