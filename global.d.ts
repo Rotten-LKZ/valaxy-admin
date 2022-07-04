@@ -102,6 +102,7 @@ declare interface Image {
   id: string
   filename: string
   url: string
+  updatedAt: number
 }
 
 declare interface UploadImageApi {
