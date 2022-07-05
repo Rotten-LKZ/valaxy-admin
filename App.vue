@@ -117,6 +117,8 @@ watch(() => route.path, () => {
   // 侧边栏
   .container-aside {
     width: 260px;
+    height: 100vh;
+    background-color: #fff;
     transition: all .8s ease-in-out;
 
     // 侧边栏头部
@@ -126,7 +128,6 @@ watch(() => route.path, () => {
       font-size: 1.4rem;
       font-weight: 500;
       white-space: nowrap;
-      background-color: #fff;
     }
 
     // 侧边栏菜单
