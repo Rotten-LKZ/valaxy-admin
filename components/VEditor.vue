@@ -112,6 +112,11 @@ watch(nowTime, () => {
   .component-veditor-form-basic {
     flex-direction: column;
   }
+
+  // md-editor
+  .md {
+    height: 480px;
+  }
 }
 
 .component-veditor-form-basic {
@@ -142,5 +147,10 @@ watch(nowTime, () => {
       }
     }
   }
+}
+
+// md-editor
+.md {
+  height: 600px;
 }
 </style>
